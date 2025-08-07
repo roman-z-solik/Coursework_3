@@ -20,6 +20,8 @@ except Exception as err:
 else:
     cur = conn.cursor()
 
+
+def fill_tables():
     create_tables_sql = """
     DROP TABLE IF EXISTS employers CASCADE;
     DROP TABLE IF EXISTS vacancies CASCADE;
@@ -98,3 +100,8 @@ else:
 
     cur.close()
     conn.close()
+
+
+if __name__ == '__main__':
+    if fill_tables():
+        print('Все прошло успешно')

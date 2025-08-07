@@ -1,11 +1,22 @@
+import os
+
+from dotenv import load_dotenv
 from src.dbm import DBManager
+from src.config import DB_NAME, HOST, PORT, companies
+from src.api import get_employer_id, get_vacancies
+
+load_dotenv()
+USER = os.getenv("USER")
+PASSWORD = os.getenv("PASSWORD")
 
 
 def main():
     manager = DBManager({
-        'dbname': 'hh_database',
-        'user': 'postgres',
-        'password': '12345'
+        'dbname': DB_NAME,
+        'host': HOST,
+        'port': PORT,
+        'user': USER,
+        'password': PASSWORD
     })
 
     while True:
@@ -33,4 +44,8 @@ def main():
         elif choice == '6':
             break
         else:
-            print("Некорректный ввод!")
+            print("\nНекорректный ввод!\nВведите пункт меню заново!")
+
+
+if __name__ == '__main__':
+    main()
