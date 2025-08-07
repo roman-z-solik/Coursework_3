@@ -3,7 +3,7 @@ import os
 import psycopg2
 from dotenv import load_dotenv
 
-from config import DB_NAME, HOST, PORT, companies
+from src.config import DB_NAME, HOST, PORT, companies
 from src.api import get_employer_id, get_vacancies
 
 load_dotenv()
@@ -22,6 +22,13 @@ else:
 
 
 def fill_tables():
+    """
+    Функция создает таблицы PostgreSQL и заполняет их значениями
+    с сайта hh.ru.
+    Создаются и заполняются 2 таблицы:
+    employers - таблица с информацией о работодателях с их ID на сайте
+    vacancies - таблица с информацией о вакансиях с их ID  и ID работодателя на сайте
+    """
     create_tables_sql = """
     DROP TABLE IF EXISTS employers CASCADE;
     DROP TABLE IF EXISTS vacancies CASCADE;
@@ -75,7 +82,6 @@ def fill_tables():
             salary_from = 0.0
             salary_to = 0.0
             currency = "RUB"
-            city = ""
             try:
                 if vacancy["salary"]:
                     salary_from = vacancy["salary"]["from"]
@@ -100,8 +106,3 @@ def fill_tables():
 
     cur.close()
     conn.close()
-
-
-if __name__ == '__main__':
-    if fill_tables():
-        print('Все прошло успешно')
