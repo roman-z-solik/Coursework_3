@@ -1,7 +1,5 @@
 import requests
 
-from src.config import companies
-
 
 def get_employer_id(companies):
     """Функция для получения ID работодателя"""
@@ -25,23 +23,24 @@ def get_employer_id(companies):
 
 def get_vacancies(employer_id):
     """Функция для получения вакансий по ID работодателя"""
-    url = f"https://api.hh.ru/vacancies?employer_id={employer_id}"
+    # employer_id = int(employer_id)
+    url = f"https://api.hh.ru/vacancies?employer_id={employer_id}&page=0"
     response = requests.get(url)
     if response.status_code == 200:
-        return response.json()['items']
+        return response.json()["items"]
     return []
 
 
 if __name__ == "__main__":
-    result = get_employer_id(companies)
-    for res in result:
-        print(res)
+    # result = get_employer_id(companies)
+    # for res in result:
+    #     print(res)
     # result = get_vacancy(1373)
     # # for res in result:
     # #     print(res)
     # print(result)
     # employer_id = companies
-    vacancies = get_vacancies(3529)
+    vacancies = get_vacancies(1373)
     print(len(vacancies))
     for i in vacancies:
         print(i)
