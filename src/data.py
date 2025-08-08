@@ -12,6 +12,7 @@ PASSWORD = os.getenv("PASSWORD")
 
 
 def connect_to_db():
+    """Функция подключения к базе PostgreeSQL"""
     conn = psycopg2.connect(
         dbname=DB_NAME, user=USER, password=PASSWORD, host=HOST, port=PORT
     )
@@ -19,6 +20,7 @@ def connect_to_db():
 
 
 def create_tables(conn):
+    """Функция создает таблицы PostgreSQL"""
     cur = conn.cursor()
     create_tables_sql = """
     DROP TABLE IF EXISTS employers CASCADE;
@@ -42,6 +44,7 @@ def create_tables(conn):
 
 
 def save_employers(conn, data_employers):
+    """Заполняет таблицу employers значениями с сайта hh.ru."""
     cur = conn.cursor()
     insert_employer_sql = """
     INSERT INTO employers (employer_id, company_name, website_url, open_vacancies)
@@ -62,6 +65,7 @@ def save_employers(conn, data_employers):
 
 
 def save_vacancies(conn, data_employers):
+    """Заполняет таблицу vacancies значениями с сайта hh.ru."""
     cur = conn.cursor()
     insert_vacancy_sql = """
     INSERT INTO vacancies (
@@ -101,13 +105,14 @@ def save_vacancies(conn, data_employers):
 
 
 def fill_tables():
+    """Функция создает таблицы PostgreSQL и заполняет их значениями с сайта hh.ru.
+    Создаются и заполняются 2 таблицы:
+    employers - таблица с информацией о работодателях с их ID на сайте
+    vacancies - таблица с информацией о вакансиях с их ID  и ID работодателя на сайте.
+    Использует остальные 4 функции."""
     conn = connect_to_db()
     create_tables(conn)
     data_employers = get_employer_id(companies)
     save_employers(conn, data_employers)
     save_vacancies(conn, data_employers)
     conn.close()
-
-
-if __name__ == "__main__":
-    fill_tables()

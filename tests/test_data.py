@@ -1,11 +1,7 @@
 from unittest.mock import patch
 
 from src.data import (  # Убедитесь, что импортируете функции корректно
-    create_tables,
-    fill_tables,
-    save_employers,
-    save_vacancies,
-)
+    create_tables, fill_tables, save_employers, save_vacancies)
 
 
 def test_create_tables(mock_db_connection):

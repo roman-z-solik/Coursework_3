@@ -39,7 +39,7 @@ def db_connection_params():
         "user": USER,
         "password": PASSWORD,
         "host": HOST,
-        "port": PORT
+        "port": PORT,
     }
 
 
