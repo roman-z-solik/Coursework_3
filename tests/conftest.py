@@ -1,9 +1,11 @@
 import os
+from unittest.mock import MagicMock, Mock, patch
+
 import pytest
-from src.dbm import DBManager
-from unittest.mock import patch, Mock, MagicMock
-from src.config import DB_NAME, HOST, PORT
 from dotenv import load_dotenv
+
+from src.config import DB_NAME, HOST, PORT
+from src.dbm import DBManager
 
 load_dotenv()
 USER = os.getenv("USER")
@@ -33,11 +35,11 @@ def mock_requests_get(monkeypatch):
 @pytest.fixture
 def db_connection_params():
     return {
-        'dbname': DB_NAME,
-        'user': USER,
-        'password': PASSWORD,
-        'host': HOST,
-        'port': 5432
+        "dbname": DB_NAME,
+        "user": USER,
+        "password": PASSWORD,
+        "host": HOST,
+        "port": PORT
     }
 
 
@@ -46,3 +48,10 @@ def db_manager(db_connection_params):
     manager = DBManager(db_connection_params)
     manager.conn = MagicMock()
     return manager
+
+
+@pytest.fixture
+def mock_db_connection():
+    """Фикстура для имитации подключения к базе данных"""
+    with patch("src.data.psycopg2.connect") as mock_conn:
+        yield mock_conn

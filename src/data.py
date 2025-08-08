@@ -1,8 +1,10 @@
 import os
+
 import psycopg2
-from src.config import DB_NAME, HOST, PORT, companies
 from dotenv import load_dotenv
+
 from src.api import get_employer_id, get_vacancies
+from src.config import DB_NAME, HOST, PORT, companies
 
 load_dotenv()
 USER = os.getenv("USER")
@@ -10,8 +12,9 @@ PASSWORD = os.getenv("PASSWORD")
 
 
 def connect_to_db():
-    conn = (psycopg2.connect
-            (dbname=DB_NAME, user=USER, password=PASSWORD, host=HOST, port=PORT))
+    conn = psycopg2.connect(
+        dbname=DB_NAME, user=USER, password=PASSWORD, host=HOST, port=PORT
+    )
     return conn
 
 
@@ -45,12 +48,15 @@ def save_employers(conn, data_employers):
     VALUES (%s, %s, %s, %s);
     """
     for employer in data_employers:
-        cur.execute(insert_employer_sql, (
-            employer["id"],
-            employer["name"],
-            employer["url"],
-            employer["open_vacancies"],
-        ))
+        cur.execute(
+            insert_employer_sql,
+            (
+                employer["id"],
+                employer["name"],
+                employer["url"],
+                employer["open_vacancies"],
+            ),
+        )
     conn.commit()
     cur.close()
 

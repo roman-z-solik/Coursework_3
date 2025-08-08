@@ -1,10 +1,9 @@
 # Проект по БД
 
-В рамках проекта вам необходимо получить 
+Проект получает 
 данные о компаниях и вакансиях с сайта hh.ru,
-спроектировать таблицы в БД PostgreSQL и 
-загрузить полученные данные в созданные 
-таблицы.  
+загружает полученные данные в БД PostgreSQL и
+позволяет работать с ними.  
 Проект создан в учебных целях. В разработке.
 
 ## Технологии
@@ -60,14 +59,9 @@ get_vacancies_with_keyword()
 Отчет о выполнении тестов в формате HTML находится в папке [папка](htmlcov/index.html).
 
 Папка `tests` содержит файлы для тестирования модулей:  
-**test_masks.py**  
-**test_processing.py**  
-**test_widget.py**  
-**test_generators.py**  
-**test_decorators.py**
-**test_utils.py**
-**test_external_api.py**
-**test_interface.py**
+**test_api.py**  
+**test_data.py**  
+**test_dbm.py**  
 
 
 ### Требования

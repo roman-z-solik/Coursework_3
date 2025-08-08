@@ -2,8 +2,7 @@ import os
 
 from dotenv import load_dotenv
 from src.dbm import DBManager
-from src.config import DB_NAME, HOST, PORT, companies
-from src.api import get_employer_id, get_vacancies
+from src.config import DB_NAME, HOST, PORT
 
 load_dotenv()
 USER = os.getenv("USER")
@@ -32,6 +31,9 @@ def main():
 
         if choice == '1':
             manager.get_companies_and_vacancies_count()
+            """Данный пункт меню всегда будет выдавать количество вакансий - 20,
+            т.к. искусственно поменян запрос, чтоб не обрабатывать несколько тысяч
+            вакансий. Если в запросе убрать ограничение, считает корректно."""
         elif choice == '2':
             manager.get_all_vacancies()
         elif choice == '3':

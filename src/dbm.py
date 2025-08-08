@@ -8,7 +8,7 @@ class DBManager:
     # Метод для подключения к БД
     def connect(self):
         if not hasattr(self, "conn"):
-            raise Exception("Database connection is closed.")
+            raise Exception("Соединение с базой закрыто.")
 
     # Метод получения списка компаний и количества вакансий
     def get_companies_and_vacancies_count(self):
@@ -41,7 +41,9 @@ class DBManager:
                 FROM vacancies WHERE vacancies.salary_from != 0.0 AND vacancies.salary_to != 0.0"""
             )
             result = cur.fetchone()[0]
-            print(f"\n{result} RUB")
+            print(
+                f"\n{result} RUB"
+            )  # запрос не учитывает другие валюты, т.к. такой задачи не ставилось
 
     # Метод поиска вакансий с зарплатой выше средней
     def get_vacancies_with_higher_salary(self):
